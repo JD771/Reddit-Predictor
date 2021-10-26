@@ -25,7 +25,7 @@ def praw_extractor(url):
     submission = reddit.submission(url=url)
     new_post = ''
 
-    # Adding all top level comments to new_post
+    # Applying the top comments to new_post
     submission.comments.replace_more(limit=0)
     for comment in submission.comments:
         new_post = new_post + comment.body + ' '
