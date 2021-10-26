@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,900,700,600,200"
+      rel="stylesheet"
+    />
+    <!-- linking the styles.css -->
+    <link rel="stylesheet" href="./styles.css" />
+    <!-- the title for the page tab -->
+    <title>Reddit Flair Detector</title>
+  </head>
+  <body>
+    <div class="container cent w-75 text-light">
+      <div class="jumbotron center text-center bg-dark">
+        <!-- main heading -->
+        <h1 class="main-title">Reddit Flair Detector</h1>
+        <br />
+        <!-- tags -->
+        <h1>
+          <ul class="topics">
+            <li>India</li>
+            <li>Personal Finance</li>
+            <li>Economics</li>
+          </ul>
+        </h1>
+        <br />
+        <!-- description to user  -->
+        <h2>Please enter your post's url to predict the flair..</h2>
+
+        <form action="/" id="formform">
+          <!-- input field -->
+          <input
+            class="text-light"
+            type="url"
+            name="url"
+            placeholder="reddit.com/r/..."
+          />
+          <!-- button -->
+          <input
+            class="button bg-danger text-light"
+            type="submit"
+            value="Predict!"
+          />
+        </form>
+        <br />
+        <!-- response part -->
+        <h2 id="guesscard">
+          I think it's a "<span class="text-primary" id="guess">
+            <!-- here the result is displayed --></span
+          >" post
+        </h2>
+      </div>
+    </div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- script for the app  -->
+  <script>
+    $("#formform").submit(function (event) {
+      // Stop form from submitting normally
+      event.preventDefault();
+
+      // Get some values from elements on the page:
+      var $form = $(this),
+        term = $form.find("input[name='url']").val(),
+        url = "/predict";
+
+      // Send the data using post
+      console.log("sending");
+      var posting = $.post(url, JSON.stringify({ url: term }));
+
+      // Put the results in a div
+      posting.done(function (data) {
+        console.log(data);
+        $("#guess").empty().append(data);
+        $("#guesscard").fadeTo(700, 1);
+      });
+    });
+  </script>
+</html>
